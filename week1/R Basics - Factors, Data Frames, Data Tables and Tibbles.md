@@ -317,8 +317,6 @@ DT = data.table(
 # ---
 # 
 
-library(data.table)
-
 # Then print it out to see what happens
 # ---
 # OUR CODE GOES BELOW
@@ -434,7 +432,7 @@ tb <- tibble(
 # OUR CODE GOES BELOW
 # 
 
-
+tb
 ```
 
 ### Selecting a Tibble Code Example
@@ -486,3 +484,4 @@ sorted_by_2
 
 
 ```
+
