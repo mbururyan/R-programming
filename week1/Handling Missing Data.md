@@ -133,6 +133,16 @@ head(bus_dataset)
 # Question: Clean the given dataset 
 # ---
 # Dataset url = http://bit.ly/MS-PropertyDataset
+
+library(tidyverse)
+library('data.table')
+
+
+df_property <- fread('http://bit.ly/MS-PropertyDataset')
+
+
+head(df_property)
+
 # ---
 # OUR CODE GOES BELOW
 # 
@@ -150,6 +160,9 @@ head(bus_dataset)
 # ---
 # OUR CODE GOES BELOW
 # 
+
+air_df <- fread('http://bit.ly/AirQualityDataset')
+ari_df
 
 
 ```
