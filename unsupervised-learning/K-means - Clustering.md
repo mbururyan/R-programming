@@ -30,6 +30,8 @@ data("iris")
 str(iris)
 
 
+
+
 ```
 
 
@@ -201,6 +203,94 @@ In order to improve this accuracy further, we may try different values of â€œkâ€
 data("airquality")
 str(airquality)
 
+# Clean the dataset
+colSums(is.na(airquality))
+
+#specify columns with missing values
+list_na <- colnames(airquality)[apply(airquality, 2, anyNA)]
+
+list_na
+# Fill null values with mean
+
+# define mean for columns with missing values
+
+mean_null <- apply(airquality[,colnames(airquality) %in% list_na],
+2,
+mean,
+na.rm = TRUE)
+
+mean_null
+
+# replace null values
+
+airquality$Ozone[is.na(airquality$Ozone)] <- mean(airquality$Ozone, na.rm=TRUE)
+
+airquality$Solar.R[is.na(airquality$Solar.R)] <- mean(airquality$Solar.R, na.rm=TRUE)
+
+# check for null values after
+colSums(is.na(airquality))
+
+```
+
+```R
+# Preprocessing
+
+# Split data into x and y
+
+air_new <- airquality[, c(1, 2, 3, 4)]
+
+air_label <- airquality[, 'Month']
+
+
+# Normalize data in air_new
+
+normalize <- function(x){
+  return ((x-min(x)) / (max(x)-min(x)))
+}
+
+#Apply for every column
+
+air_new$Ozone<- normalize(air_new$Ozone)
+
+air_new$Solar.R<- normalize(air_new$Solar.R)
+air_new$Wind<- normalize(air_new$Wind)
+air_new$Temp<- normalize(air_new$Temp)
+head(air_new)
+
+ 
+```
+
+```R
+
+# Perform K means clustering
+
+clusters <- kmeans(air_new, 5)
+
+clusters$size
+
+clusters$centers
+
+clusters$cluster
+
+```
+
+```R
+
+#Plotting the clusters
+
+# Ozone vs Solar R
+plot(air_new[c(1, 2)], col=clusters$cluster)
+
+# The OG
+plot(air_new[c(1, 2)], col=air_label)
+
+# Wind vs temp
+plot(air_new[c(3, 4)], col=clusters$cluster)
+
+# The OG
+plot(air_new[c(3, 4)], col=air_label)
+
+
 
 ```
 
@@ -212,7 +302,10 @@ str(airquality)
 # ---
 # Dataset = http://bit.ly/SalaryDatasetClustering
 # ---
-# OUR CODE GOES BELOW
+
+
+salary <- read.csv('http://bit.ly/SalaryDatasetClustering')
+head(salary)
 # 
 
 
@@ -225,8 +318,9 @@ str(airquality)
 # Question: Cluster customers from the given wholesale customer database.
 # ---
 # Dataset source = https://archive.ics.uci.edu/ml/datasets/Wholesale+customers
+
+
 # ---
-# OUR CODE GOES BELOW
 # 
 
 
