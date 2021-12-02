@@ -242,6 +242,11 @@ suppressWarnings(
                          (!require(FSelector, quietly=TRUE))
                 install.packages("FSelector")))
 library(FSelector)
+
+suppressWarnings(
+        suppressMessages(if
+                         (!require(FSelector, quietly=TRUE))
+                install.packages("devtools")))
 ```
 
 
@@ -325,11 +330,56 @@ The above examples were borrowed from the book - Unsupervised Learning with R Bo
 # ---
 # Perform feature selection using filter methods on the given dataset.
 # ---
-# Dataset url = http://bit.ly/PokemonDataset
+url <- 'http://bit.ly/PokemonDataset'
 # NB: You need to drop the label in the dataset. 
 # ---
 # OUR CODE GOES BELOW 
 # 
+
+# Feature selection by filtering out high correlated values
+
+df <- read.csv(url, header = TRUE)
+head(df)
+
+df_nums <- df[, 5:11]
+
+correlations <- cor(df_nums)
+
+#Find features with high correlation
+
+highcorr <- findCorrelation(correlations, cutoff = 0.60)
+
+names(df_nums[,highcorr])
+
+# No feature with high correlation, lets lower for practice purposes
+highcorr <- findCorrelation(correlations, cutoff = 0.51)
+
+names(df_nums[,highcorr])
+
+# Drop total and Special Defence features
+
+new_df <- df_nums[-highcorr]
+
+#Plot heatmap of both
+
+corrplot(correlations, order='hclust')
+
+corrplot(cor(new_df), order='hclust')
+
+
+# Feature selection via wrapping
+
+library(clustvarsel)
+library(mclust)
+
+
+
+# Load in inbuilt greedy search algorithm
+greed <- clustvarsel(df_nums, G=1:7)
+greed
+
+# The algo says we use 5 features, and leave out 2
+
 ```
 
 
