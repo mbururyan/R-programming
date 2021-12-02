@@ -79,7 +79,7 @@ summary(Transactions)
 # i.e. transacations ranging from 8 to 10 and performing 
 # some operation in percentage terms of the total transactions 
 # 
-itemFrequency(Transactions[, 8:10],type = "absolute")
+itemFrequency(Transactions[, 1:10],type = "absolute")
 round(itemFrequency(Transactions[, 8:10],type = "relative")*100,2)
 ```
 
@@ -155,7 +155,7 @@ summary(rules)
 # Observing rules built in our model i.e. first 5 model rules
 # ---
 # 
-inspect(rules[1:5])
+inspect(rules[1:9])
 
 
 # Interpretation of the first rule:
@@ -208,12 +208,21 @@ yogurt<-sort(yogurt, by="confidence", decreasing=TRUE)
 
 # inspect top 5
 inspect(yogurt[15:19])
+
+
+# for soda
+rice <- subset(rules, subset = lhs %pin% 'rice')
+
+#sort by confidence
+rice <- sort(rice, by = 'confidence', decreasing = TRUE)
+inspect(rice[1 : 10])
 ```
 
 # Challenges
 
 
 ```R
+
 ## Challenge 1
 # ---
 # Question: Build an apriori model previewing the rules with the highest confidence interval
