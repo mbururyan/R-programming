@@ -17,7 +17,9 @@
 
 # Loading our dataset
 # 
-train<- read.csv('http://bit.ly/MNISTDataset')  
+
+train<- read.csv('~/Documents/R/supervised-learning/datasets/train (3).csv')  
+head(train)
 
 
 ```
@@ -80,6 +82,7 @@ exeTimeTsne <- system.time(Rtsne(train[,-1], dims = 2, perplexity=30, verbose=TR
 ```R
 # Plotting our graph and closely examining the graph
 # 
+
 plot(tsne$Y, t='n', main="tsne")
 text(tsne$Y, labels=train$label, col=colors[train$label])
 
